@@ -1,15 +1,22 @@
-// src/App.js
 import React from 'react';
-import { Catalogo } from './componentes/catalogo';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { NAV } from './componentes/NAV';
+import { Catalogo } from './componentes/Catalogo';
+import { Carrito } from './componentes/Carrito';
+import { CarritoProvider } from './componentes/CarritoContext';
 
 function App() {
   return (
-    <div>
-      <h1>Mi Tienda</h1>
-      <Catalogo />
-    </div>
+    <CarritoProvider>
+      <Router>
+        <NAV />
+        <Routes>
+          <Route path="/" element={<Catalogo />} />
+          <Route path="/carrito" element={<Carrito />} />
+        </Routes>
+      </Router>
+    </CarritoProvider>
   );
 }
 
 export default App;
-

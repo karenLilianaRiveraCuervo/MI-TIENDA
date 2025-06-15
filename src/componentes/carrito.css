@@ -1,0 +1,47 @@
+.carrito-container {
+  padding: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #a5c4f3de;
+}
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  border: 2px solid #cce6f5;
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.item-carrito img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #007acc;
+}
+
+.item-carrito .info {
+  text-align: left;
+  color: #333;
+}
+
+.btn-pagar {
+  background-color: #007acc;
+  color: white;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.btn-pagar:hover {
+  background-color: #005a99;
+}
