@@ -1,37 +1,52 @@
-import React from 'react';
-import { useCarrito } from '../componentes/CarritoContext';
+// src/componentes/Carrito.jsx
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCarrito } from './CarritoContext';
 import './carrito.css';
 
 export const Carrito = () => {
-  const { carrito, actualizarCantidad, eliminarDelCarrito } = useCarrito();
   const navigate = useNavigate();
+  const { carrito, actualizarCantidad, eliminarDelCarrito } = useCarrito();
 
-  const calcularTotal = () => {
-    return carrito.reduce((total, item) => total + item.precio * item.cantidad, 0);
+  const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+  const handleSeguirComprando = () => {
+    navigate('/'); // redirige al catálogo
   };
 
-  const compras = () => {
-    navigate('/');
+  const handleIrAPagar = () => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (usuario) {
+      if (usuario.rol === 'admin') {
+        alert('Bienvenido administrador. Redirigiendo a panel de administración...');
+        
+      } else {
+        alert('Redirigiendo a registro de usuario ...');
+        navigate('/registro'); // puedes crear esta ruta
+      }
+    } else {
+      navigate('/login');
+    }
   };
 
-  const IrAPagar = () => {
-    navigate('/login');
-  };
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    console.log('Usuario activo:', usuario);
+  }, []);
 
   return (
     <div className="carrito-container">
-      <h2>Carrito de Compras</h2>
+      <h2>🛒 Carrito de Compras</h2>
       {carrito.length === 0 ? (
-        <p>Tu carrito está vacío.</p>
+        <p className="carrito-vacio">Tu carrito está vacío.</p>
       ) : (
-        <div>
+        <div className="lista-productos">
           {carrito.map((item, index) => (
             <div key={index} className="item-carrito">
-              <img src={item.imagen} alt={item.nombre} />
+              <img src={item.imagen} alt={item.nombre} className="item-imagen" />
               <div className="info">
                 <h4>{item.nombre}</h4>
-                <p>Talla: {item.talla}</p>
+                <p>Talla: <span>{item.talla}</span></p>
                 <p>
                   Cantidad:
                   <input
@@ -42,25 +57,26 @@ export const Carrito = () => {
                     onChange={(e) =>
                       actualizarCantidad(item.id, parseInt(e.target.value))
                     }
-                    style={{ marginLeft: '10px', width: '60px' }}
                   />
                 </p>
-                <p>Precio: ${item.precio}</p>
-                <p>Subtotal: ${item.precio * item.cantidad}</p>
+                <p>Precio: <strong>${item.precio}</strong></p>
+                <p>Subtotal: <strong>${item.precio * item.cantidad}</strong></p>
                 <button
                   className="btn-eliminar"
                   onClick={() => eliminarDelCarrito(item.id)}
                 >
-                  Eliminar
+                  🗑 Eliminar
                 </button>
               </div>
             </div>
           ))}
-          <h3>Total: ${calcularTotal()}</h3>
-          <button className="catalogo" onClick={compras}>SEGUIR COMPRANDO</button>
-          <br />
-          <br />
-          <button className="btn-pagar" onClick={IrAPagar}>Ir a pagar</button>
+
+          <h3 className="total-compra">Total: ${total}</h3>
+
+          <div className="botones-carrito">
+            <button className="btn-comprar" onClick={handleSeguirComprando}>⏪ Seguir Comprando</button>
+            <button className="btn-pagar" onClick={handleIrAPagar}>💳 Ir a Pagar</button>
+          </div>
         </div>
       )}
     </div>

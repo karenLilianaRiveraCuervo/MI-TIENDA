@@ -1,15 +1,17 @@
 // src/componentes/Catalogo.jsx
 import React, { useEffect, useState } from 'react';
-import { useCarrito } from '../componentes/CarritoContext';
-import { useNavigate } from 'react-router-dom';
 import './catalogo.css';
+import { useNavigate } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
+import { useCarrito } from './CarritoContext';
 
 export const Catalogo = () => {
   const [productos, setProductos] = useState([]);
   const [tallasSeleccionadas, setTallasSeleccionadas] = useState({});
   const [cantidadesSeleccionadas, setCantidadesSeleccionadas] = useState({});
-  const { agregarProducto } = useCarrito();
+  const [busqueda, setBusqueda] = useState('');
   const navigate = useNavigate();
+  const { agregarAlCarrito } = useCarrito();
 
   useEffect(() => {
     fetch('http://localhost/MI-TIENDA/backend/get_productos.php')
@@ -19,29 +21,47 @@ export const Catalogo = () => {
   }, []);
 
   const obtenerTallas = (categoria) => {
-    if (categoria.toLowerCase() === 'calzado') return ['36', '37', '38', '39', '40', '41', '42', '43'];
-    if (categoria.toLowerCase() === 'ropa') return ['S', 'M', 'L', 'XL', 'XXL'];
+    if (categoria.toLowerCase() === 'calzado') return ['36','37','38','39','40','41','42','43'];
+    if (categoria.toLowerCase() === 'ropa') return ['S','M','L','XL','XXL'];
     return [];
   };
 
   const handleAgregarCarrito = (producto) => {
     const talla = tallasSeleccionadas[producto.id] || '';
-    const cantidad = cantidadesSeleccionadas[producto.id] || 1;
+    const cantidad = parseInt(cantidadesSeleccionadas[producto.id] || 1);
 
     if (obtenerTallas(producto.categoria).length > 0 && !talla) {
-      alert('Seleccione una talla');
+      alert('Por favor selecciona una talla');
       return;
     }
 
-    agregarProducto({ ...producto, talla, cantidad });
+    const nuevoProducto = { ...producto, talla, cantidad };
+    agregarAlCarrito(nuevoProducto);
     navigate('/carrito');
   };
+
+  const productosFiltrados = productos.filter((producto) =>
+    producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   return (
     <div className="catalogo-container">
       <h2>Catálogo de Productos</h2>
+
+      <div className="buscador">
+        <div className="buscador-input">
+          <FaSearch className="icono-lupa" />
+          <input
+            type="text"
+            placeholder="Buscar por nombre..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+          />
+        </div>
+      </div>
+
       <div className="catalogo-grid">
-        {productos.map(producto => (
+        {productosFiltrados.map(producto => (
           <div key={producto.id} className="producto-card">
             <img src={producto.imagen} alt={producto.nombre} />
             <h4>{producto.nombre}</h4>
