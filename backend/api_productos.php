@@ -9,14 +9,18 @@ include 'conexion.php';
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
+
+  // GET - Obtener todos los productos
   case 'GET':
     $stmt = $conn->query("SELECT * FROM productos");
     $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($productos);
     break;
 
+  // POST - Crear un nuevo producto
   case 'POST':
     $data = json_decode(file_get_contents("php://input"), true);
+
     if (
       isset($data['nombre']) &&
       isset($data['precio']) &&
@@ -38,6 +42,7 @@ switch ($method) {
     }
     break;
 
+  // PUT - Actualizar producto existente
   case 'PUT':
     parse_str(file_get_contents("php://input"), $_PUT);
     if (
@@ -59,10 +64,11 @@ switch ($method) {
       ]);
       echo json_encode(["success" => true, "message" => "Producto actualizado"]);
     } else {
-      echo json_encode(["success" => false, "message" => "Datos incompletos"]);
+      echo json_encode(["success" => false, "message" => "Datos incompletos para actualización"]);
     }
     break;
 
+  // DELETE - Eliminar producto por ID
   case 'DELETE':
     parse_str(file_get_contents("php://input"), $_DELETE);
     if (isset($_DELETE['id'])) {
@@ -70,10 +76,11 @@ switch ($method) {
       $stmt->execute([$_DELETE['id']]);
       echo json_encode(["success" => true, "message" => "Producto eliminado"]);
     } else {
-      echo json_encode(["success" => false, "message" => "ID no proporcionado"]);
+      echo json_encode(["success" => false, "message" => "ID no proporcionado para eliminación"]);
     }
     break;
 
+  // Método no permitido
   default:
     echo json_encode(["success" => false, "message" => "Método no permitido"]);
     break;

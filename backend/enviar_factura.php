@@ -129,10 +129,10 @@ if (
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        $mail->setFrom('karen.rivera8887@gmail.com', 'Mi Tienda');
+        $mail->setFrom('karen.rivera8887@gmail.com', 'PYMES');
         $mail->addAddress($data['correo'], $data['nombre']);
         $mail->isHTML(true);
-        $mail->Subject = '🧾 Factura de tu compra';
+        $mail->Subject = 'Factura de tu compra';
 
         $mail->Body = '
             <h2>Gracias por tu compra, ' . htmlspecialchars($data['nombre']) . '</h2>

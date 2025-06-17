@@ -11,7 +11,7 @@
 
 .carrito-vacio {
   text-align: center;
-  color: #888;
+  color: #e70c0c;
 }
 
 .lista-productos {
@@ -23,7 +23,7 @@
 .item-carrito {
   display: flex;
   gap: 1rem;
-  background: #f2f8fc;
+  background: #e8f2f8;
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

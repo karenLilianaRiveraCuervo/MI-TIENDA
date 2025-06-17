@@ -1,0 +1,76 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.admin-container h2 {
+  text-align: center;
+  color: #1a8fe2;
+  margin-bottom: 2rem;
+}
+
+.formulario input {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 180px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.formulario button {
+  padding: 0.6rem 1.2rem;
+  background-color: #1a8fe2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.formulario button:hover {
+  background-color: #005fa3;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+.tabla th,
+.tabla td {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.tabla img {
+  width: 50px;
+  height: auto;
+  object-fit: cover;
+}
+
+.tabla button {
+  margin: 0 5px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tabla button:first-child {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.tabla button:last-child {
+  background-color: #d9534f;
+  color: white;
+}
+
+.tabla button:hover {
+  opacity: 0.9;
+}
