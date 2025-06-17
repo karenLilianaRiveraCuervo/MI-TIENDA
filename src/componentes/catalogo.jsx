@@ -1,4 +1,4 @@
-// src/componentes/Catalogo.jsx
+
 import React, { useEffect, useState } from 'react';
 import './catalogo.css';
 import { useNavigate } from 'react-router-dom';

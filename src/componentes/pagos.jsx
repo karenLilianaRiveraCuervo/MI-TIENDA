@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useCarrito } from './CarritoContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Pagos = () => {
   const { carrito } = useCarrito();
-  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  const [usuario, setUsuario] = useState(null);
   const [metodoPago, setMetodoPago] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const datosUsuario = JSON.parse(localStorage.getItem('usuario'));
+    setUsuario(datosUsuario);
+  }, []);
 
   const calcularTotal = () => {
     return carrito.reduce((total, item) => total + item.precio * item.cantidad, 0);
   };
 
   const handlePagar = async () => {
-    if (!metodoPago) {
-      alert('⚠️ Debes seleccionar un método de pago.');
-      return;
-    }
+    if (!metodoPago) return alert('⚠️ Debes seleccionar un método de pago.');
 
-    if (!usuario || !usuario.nombre || !usuario.correo || !usuario.Direccion) {
-      alert('⚠️ Faltan datos del usuario. Por favor, inicia sesión nuevamente.');
+    if (!usuario || !usuario.nombre || !usuario.correo || !usuario.direccion) {
+      alert('⚠️ Faltan datos del usuario. Inicia sesión de nuevo.');
+      navigate('/login');
       return;
     }
 
     const datosFactura = {
       nombre: usuario.nombre,
       correo: usuario.correo,
-      direccion: usuario.Direccion,
+      direccion: usuario.direccion,
       metodoPago,
       productos: carrito,
       total: calcularTotal()
@@ -40,7 +46,8 @@ export const Pagos = () => {
       const data = await res.json();
 
       if (data.success) {
-        alert('✅ Factura enviada correctamente a tu correo. ¡Gracias por tu compra!');
+        alert('✅ Factura enviada correctamente a tu correo.');
+        navigate('/');
       } else {
         alert('❌ Hubo un problema al registrar la compra.');
         console.error('Respuesta del servidor:', data);
@@ -53,70 +60,81 @@ export const Pagos = () => {
 
   return (
     <div style={containerStyle}>
-      <h2 style={tituloStyle}>🧾 Resumen de Pago</h2>
+      <h2 style={tituloStyle}> Resumen de compra</h2>
 
-      <div style={infoCliente}>
-        <h4>👤 Información del Cliente</h4>
-        <p><strong>Nombre:</strong> {usuario?.nombre}</p>
-        <p><strong>Correo:</strong> {usuario?.correo}</p>
-        <p><strong>Dirección:</strong> {usuario?.Direccion}</p>
-      </div>
-
-      <div style={resumenStyle}>
-        <h4>🛒 Productos:</h4>
-        {carrito.map((item, index) => (
-          <div key={index} style={{ marginBottom: '10px' }}>
-            <p><strong>{item.nombre}</strong> x{item.cantidad} - Talla: {item.talla}</p>
-            <p>Subtotal: ${item.precio * item.cantidad}</p>
+      {!usuario ? (
+        <p>Cargando datos del usuario...</p>
+      ) : (
+        <>
+          <div style={infoCliente}>
+            <h4>👤 Información del Cliente</h4>
+            <p><strong>Nombre:</strong> {usuario.nombre}</p>
+            <p><strong>Correo:</strong> {usuario.correo}</p>
+            <p><strong>Dirección:</strong> {usuario.direccion}</p>
           </div>
-        ))}
-        <h3>Total: ${calcularTotal()}</h3>
-      </div>
 
-      <div style={metodoPagoStyle}>
-        <h4>💰 Selecciona un método de pago:</h4>
-        <div style={opcionesContainer}>
-          <label style={opcionStyle}>
-            <input
-              type="radio"
-              name="metodoPago"
-              value="Tarjeta"
-              onChange={(e) => setMetodoPago(e.target.value)}
-            />
-            <img src="https://img.icons8.com/color/96/mastercard-logo.png" alt="Tarjeta" width="50" />
-            Tarjeta
-          </label>
-          <label style={opcionStyle}>
-            <input
-              type="radio"
-              name="metodoPago"
-              value="PSE"
-              onChange={(e) => setMetodoPago(e.target.value)}
-            />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/PSE_Logo.svg/2560px-PSE_Logo.svg.png" alt="PSE" width="50" />
-            PSE
-          </label>
-          <label style={opcionStyle}>
-            <input
-              type="radio"
-              name="metodoPago"
-              value="Efectivo"
-              onChange={(e) => setMetodoPago(e.target.value)}
-            />
-            <img src="https://cdn-icons-png.flaticon.com/512/3523/3523063.png" alt="Efectivo" width="50" />
-            Efectivo
-          </label>
-        </div>
-      </div>
+          <div style={resumenStyle}>
+            <h4>Productos:</h4>
+            {carrito.length === 0 ? (
+              <p>No hay productos en el carrito.</p>
+            ) : (
+              carrito.map((item, index) => (
+                <div key={index} style={{ marginBottom: '10px' }}>
+                  <p><strong>{item.nombre}</strong> x{item.cantidad} - Talla: {item.talla}</p>
+                  <p>Subtotal: ${item.precio * item.cantidad}</p>
+                </div>
+              ))
+            )}
+            <h3>Total: ${calcularTotal()}</h3>
+          </div>
 
-      <button style={btnPagar} onClick={handlePagar}>
-        💳 Confirmar y Pagar
-      </button>
+          <div style={metodoPagoStyle}>
+            <h4> Selecciona un método de pago:</h4>
+            <div style={opcionesContainer}>
+              <label style={opcionStyle}>
+                <input
+                  type="radio"
+                  name="metodoPago"
+                  value="Tarjeta"
+                  onChange={(e) => setMetodoPago(e.target.value)}
+                />
+                <img src="img/tarjeta.jpg" alt="Tarjeta" width="60" height="50" />
+                Tarjeta
+              </label>
+              <label style={opcionStyle}>
+                <input
+                  type="radio"
+                  name="metodoPago"
+                  value="PSE"
+                  onChange={(e) => setMetodoPago(e.target.value)}
+                />
+                <img src="img/pse.jpg" alt="PSE" width="60" height="50"  />
+                PSE
+              </label>
+              <label style={opcionStyle}>
+                <input
+                  type="radio"
+                  name="metodoPago"
+                  value="Efectivo"
+                  onChange={(e) => setMetodoPago(e.target.value)}
+                />
+                <img src="img/efectivo.jpg" alt="Efectivo" width="60" height="50" />
+                Efectivo
+              </label>
+            </div>
+          </div>
+
+          <button style={btnPagar} onClick={handlePagar}>
+            Confirmar y Pagar
+          </button>
+        </>
+      )}
     </div>
   );
 };
 
-// Estilos
+
+
 const containerStyle = {
   maxWidth: '600px',
   margin: '4rem auto',

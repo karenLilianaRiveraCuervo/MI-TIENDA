@@ -1,4 +1,4 @@
-// src/componentes/Carrito.jsx
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from './CarritoContext';
@@ -11,7 +11,7 @@ export const Carrito = () => {
   const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
 
   const handleSeguirComprando = () => {
-    navigate('/'); // redirige al catálogo
+    navigate('/'); 
   };
 
   const handleIrAPagar = () => {
@@ -22,7 +22,7 @@ export const Carrito = () => {
         
       } else {
         alert('Redirigiendo a registro de usuario ...');
-        navigate('/registro'); // puedes crear esta ruta
+        navigate('/registro'); 
       }
     } else {
       navigate('/login');
@@ -36,7 +36,7 @@ export const Carrito = () => {
 
   return (
     <div className="carrito-container">
-      <h2>🛒 Carrito de Compras</h2>
+      <h2>Carrito de Compras</h2>
       {carrito.length === 0 ? (
         <p className="carrito-vacio">Tu carrito está vacío.</p>
       ) : (
@@ -74,8 +74,8 @@ export const Carrito = () => {
           <h3 className="total-compra">Total: ${total}</h3>
 
           <div className="botones-carrito">
-            <button className="btn-comprar" onClick={handleSeguirComprando}>⏪ Seguir Comprando</button>
-            <button className="btn-pagar" onClick={handleIrAPagar}>💳 Ir a Pagar</button>
+            <button className="btn-comprar" onClick={handleSeguirComprando}>Seguir Comprando</button>
+            <button className="btn-pagar" onClick={handleIrAPagar}>Ir a Pagar</button>
           </div>
         </div>
       )}

@@ -7,7 +7,7 @@
 
 .catalogo-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 👈 4 columnas */
+  grid-template-columns: repeat(4, 1fr); 
   gap: 2rem;
   justify-items: center;
   font-size: 1.2rem;
@@ -16,8 +16,8 @@
 }
 
 .producto-card {
-  width: 100%; /* se adapta automáticamente al grid */
-  max-width: 250px; /* 👈 controla el tamaño de cada tarjeta */
+  width: 100%; 
+  max-width: 250px; 
   height: 500px;
   border: 4px solid #95c6e3;
   border-radius: 10px;

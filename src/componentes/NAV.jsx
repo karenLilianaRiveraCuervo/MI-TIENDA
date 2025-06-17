@@ -13,7 +13,7 @@ export const NAV = () => {
         <a href="/carrito" title="Carrito">
           <FaShoppingCart />
         </a>
-        <a href="/login" title="Iniciar Sesión">
+        <a href="/registro" title="Iniciar Sesión">
           <FaUser />
         </a>
       </div>

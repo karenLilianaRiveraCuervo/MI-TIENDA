@@ -6,7 +6,7 @@ import { Carrito } from './componentes/Carrito';
 import { CarritoProvider } from './componentes/CarritoContext';
 import { Registro } from './componentes/registro';
 import { Login } from './componentes/login';
-import { Administrador } from './componentes/administrador';
+import { AdminProductos} from './componentes/administrador';
 import { Pagos } from './componentes/pagos';
 
 
@@ -21,7 +21,8 @@ function App() {
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
-           <Route path="/administrador" element={<Administrador />} />
+          <Route path="/administrador" element={<AdminProductos />} />
+
           <Route path="/pagos" element={<Pagos />} />
         </Routes>
       </Router>
