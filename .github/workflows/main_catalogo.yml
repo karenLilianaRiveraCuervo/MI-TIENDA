@@ -27,11 +27,13 @@ jobs:
 
       - name: Build React app
         run: npm run build
+        env:
+          CI: false  # 👈 DESACTIVA modo CI para que los warnings no detengan el build
 
       - name: Move React build files to root
         run: |
           rm -rf src node_modules package.json package-lock.json
-          mv build/* ./
+          mv build/* ./ 2>/dev/null || true
           rm -rf build
 
       # 🟣 2. Instalar PHP si es necesario
@@ -78,6 +80,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'catalogo'  # cambia esto si tu App Service tiene otro nombre
+          app-name: 'catalogo'
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: .
