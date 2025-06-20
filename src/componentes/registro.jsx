@@ -118,13 +118,3 @@ const buttonPrimary = {
   cursor: 'pointer'
 };
 
-const buttonSecondary = {
-  width: '100%',
-  padding: '10px',
-  backgroundColor: '#ccc',
-  color: '#333',
-  border: 'none',
-  borderRadius: '5px',
-  fontWeight: 'bold',
-  cursor: 'pointer'
-};

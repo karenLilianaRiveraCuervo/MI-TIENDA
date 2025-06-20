@@ -18,14 +18,13 @@ export const Carrito = () => {
     if (usuario) {
       if (usuario.rol === 'admin') {
         alert('Bienvenido administrador. Redirigiendo a panel de administración...');
-        navigate('/administrador'); // ✅ redirección para admin
+        
       } else {
-        alert('Redirigiendo a pagos...');
-        navigate('/pagos'); // ✅ redirección para cliente
+        alert('Redirigiendo a registro de usuario ...');
+        navigate('/registro'); // puedes crear esta ruta
       }
     } else {
-      alert('Debes iniciar sesión para continuar.');
-      navigate('/login'); // ✅ redirección si no hay usuario
+      navigate('/login');
     }
   };
 
@@ -36,7 +35,7 @@ export const Carrito = () => {
 
   return (
     <div className="carrito-container">
-      <h2>Carrito de Compras</h2>
+      <h2>🛒 Carrito de Compras</h2>
       {carrito.length === 0 ? (
         <p className="carrito-vacio">Tu carrito está vacío.</p>
       ) : (
@@ -74,12 +73,8 @@ export const Carrito = () => {
           <h3 className="total-compra">Total: ${total}</h3>
 
           <div className="botones-carrito">
-            <button className="btn-comprar" onClick={handleSeguirComprando}>
-              Seguir Comprando
-            </button>
-            <button className="btn-pagar" onClick={handleIrAPagar}>
-              Ir a Pagar
-            </button>
+            <button className="btn-comprar" onClick={handleSeguirComprando}>⏪ Seguir Comprando</button>
+            <button className="btn-pagar" onClick={handleIrAPagar}>💳 Ir a Pagar</button>
           </div>
         </div>
       )}
