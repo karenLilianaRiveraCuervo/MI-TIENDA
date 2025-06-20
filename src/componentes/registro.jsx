@@ -31,8 +31,6 @@ export const Registro = () => {
   };
 
   return (
-
-    
     <div style={{
       maxWidth: '450px',
       margin: '4rem auto',
@@ -85,7 +83,14 @@ export const Registro = () => {
 
         <br /><br />
 
-        <p>¿Ya tienes una cuenta? <a href="login">Inicia sesión aquí</a></p>
+        <a href="/login">
+          <button
+            type="button"
+            style={buttonSecondary}
+          >
+            Ya tengo cuenta
+          </button>
+        </a>
       </form>
       <p style={{ color: 'red', marginTop: '1rem' }}>{mensaje}</p>
     </div>
@@ -93,7 +98,6 @@ export const Registro = () => {
 };
 
 // Estilos reutilizables
-
 
 const campos = {
   width: '100%',
