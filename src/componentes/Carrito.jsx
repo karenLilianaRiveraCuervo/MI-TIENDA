@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from './CarritoContext';
@@ -19,13 +18,14 @@ export const Carrito = () => {
     if (usuario) {
       if (usuario.rol === 'admin') {
         alert('Bienvenido administrador. Redirigiendo a panel de administración...');
-        
+        navigate('/administrador'); // ✅ redirección para admin
       } else {
-        alert('Redirigiendo a registro de usuario ...');
-        navigate('/registro'); 
+        alert('Redirigiendo a pagos...');
+        navigate('/pagos'); // ✅ redirección para cliente
       }
     } else {
-      navigate('/login');
+      alert('Debes iniciar sesión para continuar.');
+      navigate('/login'); // ✅ redirección si no hay usuario
     }
   };
 
@@ -74,8 +74,12 @@ export const Carrito = () => {
           <h3 className="total-compra">Total: ${total}</h3>
 
           <div className="botones-carrito">
-            <button className="btn-comprar" onClick={handleSeguirComprando}>Seguir Comprando</button>
-            <button className="btn-pagar" onClick={handleIrAPagar}>Ir a Pagar</button>
+            <button className="btn-comprar" onClick={handleSeguirComprando}>
+              Seguir Comprando
+            </button>
+            <button className="btn-pagar" onClick={handleIrAPagar}>
+              Ir a Pagar
+            </button>
           </div>
         </div>
       )}
