@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";
+$host = "pymes.mysql.database.azure.com";
 $dbname = "mi_tienda";
-$username = "root";
-$password = ""; 
+$username = "pymesadmin";
+$password = "Karen1234"; 
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
