@@ -1,4 +1,4 @@
-name: Build and deploy React + PHP app to Azure Web App - catalogo
+name: Build and deploy React + PHP app to Azure Web App - catalogoapp
 
 on:
   push:
@@ -9,14 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 🟡 1. Instalar Node y construir React
+      # 🔹 1. Instalar Node y construir React
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -27,36 +25,37 @@ jobs:
 
       - name: Build React app
         run: npm run build
-        env:
-          CI: false  # Desactiva modo CI para que los warnings no rompan el build
 
-      - name: Move React build files to root
+      - name: Verificar que se generó la carpeta build
+        run: ls -la build
+
+      # 🟡 Copiar archivos del build al directorio public (opcional)
+      - name: Mover build a carpeta public
         run: |
-          rm -rf src node_modules package.json package-lock.json
-          mv build/* ./ 2>/dev/null || true
-          rm -rf build
+          mkdir -p public
+          cp -r build/* public/
 
-      # 🟣 2. Instalar PHP si es necesario
+      # 🔹 2. Instalar PHP
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
-      - name: Check if composer.json exists
+      - name: Verificar si existe composer.json
         id: check_files
         uses: andstor/file-existence-action@v1
         with:
           files: 'composer.json'
 
-      - name: Run composer install
+      - name: Ejecutar composer install
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer install --prefer-dist --no-progress
 
-      # 📦 3. Empaquetar todo para desplegar
-      - name: Zip artifact for deployment
+      # 📦 3. Crear archivo zip para desplegar
+      - name: Crear archivo ZIP
         run: zip release.zip ./* -r
 
-      - name: Upload artifact
+      - name: Subir artefacto
         uses: actions/upload-artifact@v4
         with:
           name: php-react-app
@@ -65,21 +64,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    permissions:
-      contents: read
 
     steps:
-      - name: Download artifact
+      - name: Descargar artefacto
         uses: actions/download-artifact@v4
         with:
           name: php-react-app
 
-      - name: Unzip artifact
+      - name: Descomprimir artefacto
         run: unzip release.zip
 
-      - name: Deploy to Azure Web App
+      - name: Desplegar en Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'catalogo' # Cambia si tu App Service tiene otro nombre
+          app-name: 'catalogoapp'  
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: .
