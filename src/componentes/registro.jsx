@@ -86,7 +86,7 @@ export const Registro = () => {
         <a href="/login">
           <button
             type="button"
-            style={buttonSecondary}
+            
           >
             Ya tengo cuenta
           </button>
