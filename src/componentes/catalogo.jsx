@@ -14,7 +14,7 @@ export const Catalogo = () => {
   const { agregarAlCarrito } = useCarrito();
 
   useEffect(() => {
-    fetch('http://localhost/MI-TIENDA/backend/get_productos.php')
+    fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/get_productos.php')
       .then(response => response.json())
       .then(data => setProductos(data))
       .catch(error => console.error('Error al obtener productos:', error));

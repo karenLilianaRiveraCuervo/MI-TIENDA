@@ -18,7 +18,7 @@ export const Registro = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('http://localhost/MI-TIENDA/backend/registro.php', {
+    const res = await fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/registro.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)

@@ -15,7 +15,7 @@ export const Login = () => {
     console.log('Datos enviados:', form);
 
     try {
-      const res = await fetch('http://localhost/MI-TIENDA/backend/login.php', {
+      const res = await fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/login.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

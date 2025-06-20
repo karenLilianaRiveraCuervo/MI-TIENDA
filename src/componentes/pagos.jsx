@@ -37,7 +37,7 @@ export const Pagos = () => {
     };
 
     try {
-      const res = await fetch('http://localhost/MI-TIENDA/backend/enviar_factura.php', {
+      const res = await fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/enviar_factura.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosFactura)

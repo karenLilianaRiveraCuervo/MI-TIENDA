@@ -16,7 +16,7 @@ export const AdminProductos = () => {
   }, []);
 
   const obtenerProductos = async () => {
-    const res = await fetch('http://localhost/MI-TIENDA/backend/api_productos.php');
+    const res = await fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/api_productos.php');
     const data = await res.json();
     setProductos(data);
   };
@@ -30,13 +30,13 @@ export const AdminProductos = () => {
 
     if (form.id) {
       const body = new URLSearchParams(form).toString();
-      await fetch('http://localhost/MI-TIENDA/backend/api_productos.php', {
+      await fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/api_productos.php', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body
       });
     } else {
-      await fetch('http://localhost/MI-TIENDA/backend/api_productos.php', {
+      await fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/api_productos.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -53,7 +53,7 @@ export const AdminProductos = () => {
 
   const handleEliminar = async (id) => {
     const body = new URLSearchParams({ id }).toString();
-    await fetch('http://localhost/MI-TIENDA/backend/api_productos.php', {
+    await fetch('https://catalogoapp-evcga9fegxedg8hs.canadacentral-01.azurewebsites.net/backend/api_productos.php', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body
